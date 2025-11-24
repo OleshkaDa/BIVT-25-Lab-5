@@ -9,7 +9,8 @@ namespace Lab5
         {
             int[] answer = null;
 
-            // code here             ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА
+            // code here 
+            answer = new int[matrix.GetLength(0)];
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 int minIndex = 0;
@@ -268,7 +269,7 @@ namespace Lab5
                     }
                     else if (j == minCol + 1)
                     {
-                        answer[i, j] = (i < array.Length) ? array[i] : 0;
+                        answer[i, j] = array[i];
                     }
                     else
                     {
