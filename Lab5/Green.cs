@@ -9,7 +9,7 @@ namespace Lab5
         {
             int[] answer = null;
 
-            // code here 
+            // code here
             answer = new int[matrix.GetLength(0)];
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
@@ -229,58 +229,64 @@ namespace Lab5
             }
             // end
         }
+        
         public int[,] Task7(int[,] matrix, int[] array)
         {
             int[,] answer = null;
 
-            // code here             ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА ОШИБКА 
-            int rows = matrix.GetLength(0);
-            int cols = matrix.GetLength(1);
+            // code here
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
 
-            // Находим минимальный элемент и его столбец
-            int minValue = matrix[0, 0];
-            int minCol = 0;
-
-            for (int i = 0; i < rows; i++)
+            int minibro = int.MaxValue;
+            int minibroStolbech = 0;
+            for (int i = 0; i < n; i ++)
             {
-                for (int j = 0; j < cols; j++)
+                for(int j = 0;j < m; j ++)
                 {
-                    if (matrix[i, j] < minValue)
+                    if (matrix[i, j] < minibro)
                     {
-                        minValue = matrix[i, j];
-                        minCol = j;
+                        minibro = matrix[i, j];
+                        minibroStolbech = j;
                     }
                 }
             }
 
-            // Если минимальный элемент в последнем столбце, вставляем после него
-            // Если в другом столбце, тоже вставляем после него
-            // Размер всегда: rows × (cols + 1)
 
-            answer = new int[rows, cols + 1];
 
-            for (int i = 0; i < rows; i++)
+
+            if (array.Length == n)
             {
-                for (int j = 0; j < cols + 1; j++)
+                answer = new int[n, m + 1];
+                for (int i = 0; i < n; i++)
                 {
-                    if (j <= minCol)
+                    for (int j = 0; j < m + 1; j++)
                     {
-                        answer[i, j] = matrix[i, j];
-                    }
-                    else if (j == minCol + 1)
-                    {
-                        answer[i, j] = array[i];
-                    }
-                    else
-                    {
-                        answer[i, j] = matrix[i, j - 1];
+                        if (j <= minibroStolbech)
+                        {
+                            answer[i, j] = matrix[i, j];
+                        }
+                        else if (j == minibroStolbech + 1)
+                        {
+                            answer[i, j] = array[i];
+                        }
+                        else
+                        {
+                            answer[i, j] = matrix[i, j - 1];
+                        }
                     }
                 }
             }
+            else
+            {
+                return matrix;
+            }
+            
             // end
 
             return answer;
         }
+
         public void Task8(int[,] matrix)
         {
             // code here
