@@ -93,33 +93,27 @@ namespace Lab5
         public void Task4(int[,] matrix)
         {
             // code here
-            int n = matrix.GetLength(0);
+            int stl = matrix.GetLength(0);
+            int str = matrix.GetLength(1);
 
-            if (n != matrix.GetLength(1))
-            {
+            if (stl != str)
                 return;
-            }
 
-            int chiselkoMatrica = matrix[0, 0];
-            int indexBro = 0;
+            int max = int.MinValue;
+            int maxIndex = -1;
 
-            for (int i = 1; i < n; i++)
+            for (int i = 0; i < stl; i++)
             {
-                if (matrix[i, i] > chiselkoMatrica)
+                if (matrix[i, i] > max)
                 {
-                    chiselkoMatrica = matrix[i, i];
-                    indexBro = i;
+                    max = matrix[i, i]; maxIndex = i;
                 }
             }
-
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < stl; i++)
             {
-                if (i != indexBro)
-                {
-                    int temp = matrix[indexBro, i];
-                    matrix[indexBro, i] = matrix[i, indexBro];
-                    matrix[i, indexBro] = temp;
-                }
+                int temp = matrix[maxIndex, i];
+                matrix[maxIndex, i] = matrix[i, maxIndex];
+                matrix[i, maxIndex] = temp;
             }
             // end
         }
