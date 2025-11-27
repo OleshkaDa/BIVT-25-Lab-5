@@ -30,15 +30,15 @@ namespace Lab5
         public void Task2(int[,] matrix)
         {
             // code here
-            int stroka = matrix.GetLength(0);
-            int stolbec = matrix.GetLength(1);
+            int stolbech = matrix.GetLength(0);
+            int stroka = matrix.GetLength(1);
 
-            for (int i = 0; i < stroka; i++)
+            for (int i = 0; i < stolbech; i++)
             {
                 int maxIndex = 0;
                 int maxValue = matrix[i, 0];
 
-                for (int j = 1; j < stolbec; j++)
+                for (int j = 1; j < stroka; j++)
                 {
                     if (matrix[i, j] > maxValue)
                     {
@@ -61,31 +61,33 @@ namespace Lab5
             // code here
             int n = matrix.GetLength(0);
 
-            if (n != matrix.GetLength(1) || k < 0 || k >= n)
-            {
+            if (matrix.GetLength(1) != n || k < 0 || k >=n)
                 return;
-            }
 
-            int maxDiagonalValue = matrix[0, 0];
-            int maxDiagonalColumn = 0;
 
-            for (int i = 1; i < n; i++)
+            int chisloVmatrice = matrix[0, 0];
+            int stobbechSchislom = 0;
+
+            for (int i = 0; i < n; i ++)
             {
-                if (matrix[i, i] > maxDiagonalValue)
+                if (matrix[i, i] > chisloVmatrice)
                 {
-                    maxDiagonalValue = matrix[i, i];
-                    maxDiagonalColumn = i;
+                    chisloVmatrice = matrix[i, i];
+                    stobbechSchislom = i;
                 }
             }
-            if (maxDiagonalColumn != k)
+
+
+            if (stobbechSchislom != k)
             {
-                for (int i = 0; i < n; i++)
+                for (int i=0; i < n; i++)
                 {
-                    int temp = matrix[i, k];
-                    matrix[i, k] = matrix[i, maxDiagonalColumn];
-                    matrix[i, maxDiagonalColumn] = temp;
+                    int smenkaK = matrix[i, k];
+                    matrix[i, k] = matrix[i, stobbechSchislom];
+                    matrix[i, stobbechSchislom] = smenkaK;
                 }
             }
+            
             // end
         }
         public void Task4(int[,] matrix)
@@ -98,25 +100,25 @@ namespace Lab5
                 return;
             }
 
-            int maxDiagonalValue = matrix[0, 0];
-            int maxIndex = 0;
+            int chiselkoMatrica = matrix[0, 0];
+            int indexBro = 0;
 
             for (int i = 1; i < n; i++)
             {
-                if (matrix[i, i] > maxDiagonalValue)
+                if (matrix[i, i] > chiselkoMatrica)
                 {
-                    maxDiagonalValue = matrix[i, i];
-                    maxIndex = i;
+                    chiselkoMatrica = matrix[i, i];
+                    indexBro = i;
                 }
             }
 
             for (int i = 0; i < n; i++)
             {
-                if (i != maxIndex)
+                if (i != indexBro)
                 {
-                    int temp = matrix[maxIndex, i];
-                    matrix[maxIndex, i] = matrix[i, maxIndex];
-                    matrix[i, maxIndex] = temp;
+                    int temp = matrix[indexBro, i];
+                    matrix[indexBro, i] = matrix[i, indexBro];
+                    matrix[i, indexBro] = temp;
                 }
             }
             // end
@@ -156,13 +158,17 @@ namespace Lab5
                     maxSumIndex = i;
                 }
             }
-
+            
 
             answer = new int[stroka - 1, stolbec];
 
             for (int i = 0, newI = 0; i < stroka; i++)
             {
-                if (i != maxSumIndex)
+                if (i == maxSumIndex)
+                {
+                    continue;
+                }
+                else
                 {
                     for (int j = 0; j < stolbec; j++)
                     {
@@ -279,7 +285,7 @@ namespace Lab5
             }
             else
             {
-                return matrix;
+                answer = matrix;
             }
             
             // end
@@ -295,28 +301,28 @@ namespace Lab5
 
             for (int j = 0; j < stolbec; j++)
             {
-                int positiveCount = 0;
-                int negativeCount = 0;
-                int maxValue = matrix[0, j];
+                int SchetDobrix = 0;
+                int SchetZlix = 0;
+                int maxchislo = matrix[0, j];
                 int maxIndex = 0;
 
                 for (int i = 0; i < stroka; i++)
                 {
-                    if (matrix[i, j] > 0) positiveCount++;
-                    else if (matrix[i, j] < 0) negativeCount++;
+                    if (matrix[i, j] > 0) SchetDobrix++;
+                    else if (matrix[i, j] < 0) SchetZlix++;
 
-                    if (matrix[i, j] > maxValue)
+                    if (matrix[i, j] > maxchislo)
                     {
-                        maxValue = matrix[i, j];
+                        maxchislo = matrix[i, j];
                         maxIndex = i;
                     }
                 }
 
-                if (positiveCount > negativeCount)
+                if (SchetDobrix > SchetZlix)
                 {
                     matrix[maxIndex, j] = 0;
                 }
-                else if (negativeCount > positiveCount)
+                else if (SchetZlix > SchetDobrix)
                 {
                     matrix[maxIndex, j] = maxIndex;
                 }
@@ -351,11 +357,10 @@ namespace Lab5
 
             if (n != matrix.GetLength(1))
             {
-                return (A, B); // возвращаем null для неквадратной матрицы
+                return (A, B);
             }
 
-            // Вычисляем размеры массивов
-            int sizeA = n * (n + 1) / 2;  // сумма арифметической прогрессии
+            int sizeA = n * (n + 1) / 2; 
             int sizeB = n * (n - 1) / 2;
 
             A = new int[sizeA];
@@ -368,13 +373,15 @@ namespace Lab5
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (j >= i) // Верхний треугольник (включая диагональ)
+                    if (j >= i) 
                     {
-                        A[indexA++] = matrix[i, j];
+                        A[indexA] = matrix[i, j];
+                        indexA++;
                     }
-                    else // Нижний треугольник
+                    else 
                     {
-                        B[indexB++] = matrix[i, j];
+                        B[indexB] = matrix[i, j];
+                        indexB++;
                     }
                 }
             }
@@ -390,28 +397,37 @@ namespace Lab5
 
             for (int j = 0; j < stolbec; j++)
             {
-                // Собираем элементы столбца в массив
-                int[] column = new int[stroka];
-                for (int i = 0; i < stroka; i++)
+                
+                if (j % 2 == 0)
                 {
-                    column[i] = matrix[i, j];
+                    for (int i = 0; i < stroka - 1; i++)
+                    {
+                        for (int k = 0; k < stroka - 1 - i; k++)
+                        {
+                            if (matrix[k, j] < matrix[k + 1, j])
+                            {
+                                int temp = matrix[k, j];
+                                matrix[k, j] = matrix[k + 1, j];
+                                matrix[k + 1, j] = temp;
+                            }
+                        }
+                    }
                 }
-
-                // Сортируем по условию
-                if (j % 2 == 0) // Четные столбцы - по убыванию
+                
+                else
                 {
-                    Array.Sort(column);
-                    Array.Reverse(column);
-                }
-                else // Нечетные столбцы - по возрастанию
-                {
-                    Array.Sort(column);
-                }
-
-                // Возвращаем отсортированные элементы обратно в столбец
-                for (int i = 0; i < stroka; i++)
-                {
-                    matrix[i, j] = column[i];
+                    for (int i = 0; i < stroka - 1; i++)
+                    {
+                        for (int k = 0; k < stroka - 1 - i; k++)
+                        {
+                            if (matrix[k, j] > matrix[k + 1, j])
+                            {
+                                int temp = matrix[k, j];
+                                matrix[k, j] = matrix[k + 1, j];
+                                matrix[k + 1, j] = temp;
+                            }
+                        }
+                    }
                 }
             }
             // end
@@ -421,46 +437,64 @@ namespace Lab5
             // code here
             if (array == null || array.Length == 0) return;
 
-            // Создаем массив для хранения информации о строках
-            var rowInfo = new (int length, int sum, int index)[array.Length];
 
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length - 1; i++)
             {
-                if (array[i] != null)
+                for (int j = 0; j < array.Length - 1 - i; j++)
                 {
-                    int sum = 0;
-                    for (int j = 0; j < array[i].Length; j++)
+                    int length1;
+                    int length2;
+
+                    if (array[j] != null)
                     {
-                        sum += array[i][j];
+                        length1 = array[j].Length;
                     }
-                    rowInfo[i] = (array[i].Length, sum, i);
+                    else
+                    {
+                        length1 = 0;
+                    }
+
+                    if (array[j + 1] != null)
+                    {
+                        length2 = array[j + 1].Length;
+                    }
+                    else
+                    {
+                        length2 = 0;
+                    }
+
+
+                    if (length1 < length2)
+                    {
+
+                        int[] temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+
+                    else if (length1 == length2 && length1 > 0)
+                    {
+                        int sum1 = 0;
+                        int sum2 = 0;
+
+                        for (int k = 0; k < length1; k++)
+                        {
+                            sum1 += array[j][k];
+                        }
+                        for (int k = 0; k < length2; k++)
+                        {
+                            sum2 += array[j + 1][k];
+                        }
+
+                        if (sum1 < sum2)
+                        {
+
+                            int[] temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
                 }
-                else
-                {
-                    rowInfo[i] = (0, 0, i);
-                }
-            }
-
-            // Сортируем по убыванию количества элементов, затем по убыванию суммы
-            Array.Sort(rowInfo, (a, b) =>
-            {
-                if (a.length != b.length)
-                    return b.length.CompareTo(a.length); // по убыванию длины
-                else
-                    return b.sum.CompareTo(a.sum); // по убыванию суммы
-            });
-
-            // Создаем новый отсортированный массив
-            int[][] sortedArray = new int[array.Length][];
-            for (int i = 0; i < array.Length; i++)
-            {
-                sortedArray[i] = array[rowInfo[i].index];
-            }
-
-            // Копируем отсортированный массив обратно в исходный
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = sortedArray[i];
             }
             // end
         }
